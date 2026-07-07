@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>☠ Dark Magic Calculator ☠</title>
+<title>👻 Ghost Chat</title>
 
 <style>
 *{
@@ -14,210 +14,229 @@ font-family:Arial,sans-serif;
 }
 
 body{
+background:#000;
+overflow:hidden;
+color:#fff;
 height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-background:#000;
-overflow:hidden;
-color:white;
 }
 
-body::before{
-content:"";
+/* Background Smoke */
+.smoke{
 position:absolute;
-width:300%;
-height:300%;
-background:
-radial-gradient(circle,#ff000022 2px,transparent 2px);
-background-size:60px 60px;
-animation:move 20s linear infinite;
+width:250px;
+height:250px;
+background:radial-gradient(circle,rgba(255,255,255,.2),transparent 70%);
+border-radius:50%;
+animation:smoke 12s linear infinite;
+filter:blur(25px);
 }
 
-@keyframes move{
-from{transform:translate(0,0);}
-to{transform:translate(-300px,-300px);}
+.smoke:nth-child(1){
+left:10%;
+bottom:-150px;
+animation-delay:0s;
 }
 
-.card{
+.smoke:nth-child(2){
+left:50%;
+bottom:-180px;
+animation-delay:3s;
+}
+
+.smoke:nth-child(3){
+left:80%;
+bottom:-150px;
+animation-delay:6s;
+}
+
+@keyframes smoke{
+0%{
+transform:translateY(0) scale(.7);
+opacity:.1;
+}
+100%{
+transform:translateY(-900px) scale(2);
+opacity:0;
+}
+}
+
+/* Fire Glow */
+.fire{
+position:absolute;
+bottom:0;
+width:100%;
+height:120px;
+background:radial-gradient(circle at center,#ff0000,#ff6600,#000 70%);
+filter:blur(35px);
+animation:fire 1s infinite alternate;
+}
+
+@keyframes fire{
+from{
+opacity:.5;
+}
+to{
+opacity:1;
+transform:scaleY(1.2);
+}
+}
+
+.chat{
 position:relative;
-background:#111;
-padding:35px;
+z-index:5;
+width:380px;
+background:rgba(20,20,20,.88);
+padding:20px;
 border-radius:15px;
+box-shadow:0 0 30px red;
+backdrop-filter:blur(6px);
+}
+
+h2{
 text-align:center;
-box-shadow:0 0 40px red;
-z-index:2;
-width:340px;
-animation:glow 2s infinite alternate;
+color:#00ffcc;
+margin-bottom:15px;
+text-shadow:0 0 10px cyan;
 }
 
-@keyframes glow{
-from{box-shadow:0 0 20px red;}
-to{box-shadow:0 0 50px crimson;}
-}
-
-h1{
-color:#ff4444;
-margin-bottom:20px;
-animation:glitch .8s infinite;
-}
-
-@keyframes glitch{
-0%{transform:translate(0);}
-25%{transform:translate(-2px,2px);}
-50%{transform:translate(2px,-2px);}
-75%{transform:translate(-2px,-1px);}
-100%{transform:translate(0);}
-}
-
-input{
-width:120px;
+#messages{
+height:300px;
+overflow-y:auto;
+border:1px solid #333;
 padding:10px;
-margin:8px;
-font-size:18px;
-border:none;
-border-radius:6px;
-text-align:center;
+border-radius:10px;
+background:#111;
+margin-bottom:10px;
 }
 
-button{
-padding:12px 22px;
-margin-top:15px;
-font-size:17px;
-background:darkred;
-color:white;
-border:none;
-border-radius:8px;
-cursor:pointer;
-transition:.3s;
-}
-
-button:hover{
-transform:scale(1.08);
-background:red;
-}
-
-#result{
-margin-top:25px;
-font-size:24px;
-font-weight:bold;
-color:#00ff99;
-min-height:35px;
+.user{
+color:#7CFC00;
+margin:8px 0;
 }
 
 .ghost{
-position:absolute;
-font-size:30px;
-animation:float linear infinite;
-opacity:.7;
+color:#ff5555;
+font-style:italic;
+margin:8px 0;
+animation:flicker .5s;
 }
 
-@keyframes float{
-from{
-transform:translateY(110vh);
+@keyframes flicker{
+0%,100%{opacity:1;}
+50%{opacity:.4;}
 }
-to{
-transform:translateY(-120vh);
+
+input{
+width:74%;
+padding:10px;
+border:none;
+border-radius:6px;
+background:#222;
+color:white;
 }
+
+button{
+padding:10px 14px;
+border:none;
+background:#990000;
+color:white;
+border-radius:6px;
+cursor:pointer;
+}
+
+button:hover{
+background:red;
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
+<div class="smoke"></div>
+<div class="smoke"></div>
+<div class="smoke"></div>
 
-<h1>☠ DARK MAGIC ☠</h1>
+<div class="fire"></div>
 
-<p>Enter two numbers...</p>
+<div class="chat">
 
-<input id="a" type="number" placeholder="First">
+<h2>👻 Chat With The Ghost 👻</h2>
 
-<input id="b" type="number" placeholder="Second">
+<div id="messages">
+<div class="ghost">👻 I have been waiting...</div>
+</div>
 
-<br>
+<input id="msg" placeholder="Say something...">
 
-<button onclick="magic()">
-✨ Cast Spell ✨
+<button onclick="send()">
+Send
 </button>
-
-<div id="result"></div>
 
 </div>
 
 <script>
-const horror=[
-"💀",
-"👻",
-"☠",
-"🕷️",
-"🩸",
-"😈",
-"🧛",
-"🦇"
+
+const replies=[
+
+"👻 I see your shadow...",
+"💀 Don't turn around...",
+"☠ Someone is standing behind you...",
+"👁 I know your secret...",
+"🕯 The darkness remembers...",
+"👻 Leave before midnight...",
+"🩸 I hear whispers...",
+"😈 The walls are watching...",
+"🌑 Your fate is near...",
+"🦇 The night never sleeps...",
+"👻 I am closer than you think...",
+"💀 I never left this place..."
 ];
 
-for(let i=0;i<35;i++){
+function send(){
 
-let g=document.createElement("div");
+const input=document.getElementById("msg");
 
-g.className="ghost";
+if(input.value.trim()=="") return;
 
-g.innerHTML=horror[Math.floor(Math.random()*horror.length)];
+const box=document.getElementById("messages");
 
-g.style.left=Math.random()*100+"vw";
+box.innerHTML+=`<div class="user">🙂 You: ${input.value}</div>`;
 
-g.style.animationDuration=(6+Math.random()*10)+"s";
+input.value="";
 
-g.style.fontSize=(20+Math.random()*30)+"px";
+setTimeout(()=>{
 
-g.style.animationDelay=Math.random()*8+"s";
+let r=replies[Math.floor(Math.random()*replies.length)];
 
-document.body.appendChild(g);
+box.innerHTML+=`<div class="ghost">${r}</div>`;
 
-}
+box.scrollTop=box.scrollHeight;
 
-function magic(){
-
-let a=Number(document.getElementById("a").value);
-
-let b=Number(document.getElementById("b").value);
-
-if(isNaN(a)||isNaN(b)){
-document.getElementById("result").innerHTML="👻 The spirits demand numbers!";
-return;
-}
-
-// Intentionally wrong calculation for a prank/demo
-let fake=(a+b)*13-7;
-
-const messages=[
-`☠ The cursed answer is <b>${fake}</b> 💀`,
-`👻 Evil spirits changed reality: <b>${fake}</b>`,
-`😈 The haunted calculator whispers <b>${fake}</b>`,
-`🩸 Reality has glitched... Result: <b>${fake}</b>`
-];
-
-document.getElementById("result").innerHTML=
-messages[Math.floor(Math.random()*messages.length)];
-
-document.body.style.animation="shake .15s 4";
+document.body.style.animation="shake .2s";
 
 setTimeout(()=>{
 document.body.style.animation="";
-},700);
+},300);
+
+},1000);
 
 }
 
 const style=document.createElement("style");
+
 style.innerHTML=`
 @keyframes shake{
-0%{transform:translate(0);}
-25%{transform:translate(-5px,3px);}
-50%{transform:translate(5px,-3px);}
-75%{transform:translate(-4px,-2px);}
-100%{transform:translate(0);}
-}`;
+0%{transform:translateX(0);}
+25%{transform:translateX(-5px);}
+50%{transform:translateX(5px);}
+75%{transform:translateX(-4px);}
+100%{transform:translateX(0);}
+}
+`;
+
 document.head.appendChild(style);
 
 </script>
