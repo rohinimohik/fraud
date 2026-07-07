@@ -3,243 +3,114 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>👻 Ghost Chat</title>
 
-<style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
-}
-
-body{
-background:#000;
-overflow:hidden;
-color:#fff;
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-}
-
-/* Background Smoke */
-.smoke{
-position:absolute;
-width:250px;
-height:250px;
-background:radial-gradient(circle,rgba(255,255,255,.2),transparent 70%);
-border-radius:50%;
-animation:smoke 12s linear infinite;
-filter:blur(25px);
-}
-
-.smoke:nth-child(1){
-left:10%;
-bottom:-150px;
-animation-delay:0s;
-}
-
-.smoke:nth-child(2){
-left:50%;
-bottom:-180px;
-animation-delay:3s;
-}
-
-.smoke:nth-child(3){
-left:80%;
-bottom:-150px;
-animation-delay:6s;
-}
-
-@keyframes smoke{
-0%{
-transform:translateY(0) scale(.7);
-opacity:.1;
-}
-100%{
-transform:translateY(-900px) scale(2);
-opacity:0;
-}
-}
-
-/* Fire Glow */
-.fire{
-position:absolute;
-bottom:0;
-width:100%;
-height:120px;
-background:radial-gradient(circle at center,#ff0000,#ff6600,#000 70%);
-filter:blur(35px);
-animation:fire 1s infinite alternate;
-}
-
-@keyframes fire{
-from{
-opacity:.5;
-}
-to{
-opacity:1;
-transform:scaleY(1.2);
-}
-}
-
-.chat{
-position:relative;
-z-index:5;
-width:380px;
-background:rgba(20,20,20,.88);
-padding:20px;
-border-radius:15px;
-box-shadow:0 0 30px red;
-backdrop-filter:blur(6px);
-}
-
-h2{
-text-align:center;
-color:#00ffcc;
-margin-bottom:15px;
-text-shadow:0 0 10px cyan;
-}
-
-#messages{
-height:300px;
-overflow-y:auto;
-border:1px solid #333;
-padding:10px;
-border-radius:10px;
-background:#111;
-margin-bottom:10px;
-}
-
-.user{
-color:#7CFC00;
-margin:8px 0;
-}
-
-.ghost{
-color:#ff5555;
-font-style:italic;
-margin:8px 0;
-animation:flicker .5s;
-}
-
-@keyframes flicker{
-0%,100%{opacity:1;}
-50%{opacity:.4;}
-}
-
-input{
-width:74%;
-padding:10px;
-border:none;
-border-radius:6px;
-background:#222;
-color:white;
-}
-
-button{
-padding:10px 14px;
-border:none;
-background:#990000;
-color:white;
-border-radius:6px;
-cursor:pointer;
-}
-
-button:hover{
-background:red;
-}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="smoke"></div>
-<div class="smoke"></div>
-<div class="smoke"></div>
+<!-- CRT Overlay -->
+<div class="crt"></div>
 
+<!-- Smoke -->
+<div class="smoke smoke1"></div>
+<div class="smoke smoke2"></div>
+<div class="smoke smoke3"></div>
+<div class="smoke smoke4"></div>
+
+<!-- Fire -->
 <div class="fire"></div>
 
-<div class="chat">
+<!-- Blood -->
+<div class="blood blood1"></div>
+<div class="blood blood2"></div>
+<div class="blood blood3"></div>
 
-<h2>👻 Chat With The Ghost 👻</h2>
+<!-- Lightning -->
+<div id="lightning"></div>
 
-<div id="messages">
-<div class="ghost">👻 I have been waiting...</div>
+<!-- Ghost Jump Scare -->
+<div id="ghostJump">
+
+<img src="ghost.png" alt="Ghost">
+
 </div>
 
-<input id="msg" placeholder="Say something...">
+<!-- Horror Emojis -->
+<div id="emojiContainer"></div>
 
-<button onclick="send()">
+<!-- Main Chat -->
+
+<div class="container">
+
+<h1 id="title">
+👻 CHAT WITH THE GHOST 👻
+</h1>
+
+<div id="chat">
+
+<div class="ghost">
+
+💀 Welcome...
+
+</div>
+
+<div class="ghost">
+
+👁️ I have been waiting for you...
+
+</div>
+
+</div>
+
+<div class="typing" id="typing">
+
+The ghost is whispering...
+
+</div>
+
+<div class="inputBox">
+
+<input
+id="msg"
+type="text"
+placeholder="Type your message..."
+autocomplete="off"
+>
+
+<button id="send">
+
 Send
+
 </button>
 
 </div>
 
-<script>
+</div>
 
-const replies=[
+<!-- Horror Sound -->
 
-"👻 I see your shadow...",
-"💀 Don't turn around...",
-"☠ Someone is standing behind you...",
-"👁 I know your secret...",
-"🕯 The darkness remembers...",
-"👻 Leave before midnight...",
-"🩸 I hear whispers...",
-"😈 The walls are watching...",
-"🌑 Your fate is near...",
-"🦇 The night never sleeps...",
-"👻 I am closer than you think...",
-"💀 I never left this place..."
-];
+<audio id="whisper">
 
-function send(){
+<source src="whisper.mp3" type="audio/mpeg">
 
-const input=document.getElementById("msg");
+</audio>
 
-if(input.value.trim()=="") return;
+<audio id="thunder">
 
-const box=document.getElementById("messages");
+<source src="thunder.mp3" type="audio/mpeg">
 
-box.innerHTML+=`<div class="user">🙂 You: ${input.value}</div>`;
+</audio>
 
-input.value="";
+<audio id="scream">
 
-setTimeout(()=>{
+<source src="scream.mp3" type="audio/mpeg">
 
-let r=replies[Math.floor(Math.random()*replies.length)];
+</audio>
 
-box.innerHTML+=`<div class="ghost">${r}</div>`;
-
-box.scrollTop=box.scrollHeight;
-
-document.body.style.animation="shake .2s";
-
-setTimeout(()=>{
-document.body.style.animation="";
-},300);
-
-},1000);
-
-}
-
-const style=document.createElement("style");
-
-style.innerHTML=`
-@keyframes shake{
-0%{transform:translateX(0);}
-25%{transform:translateX(-5px);}
-50%{transform:translateX(5px);}
-75%{transform:translateX(-4px);}
-100%{transform:translateX(0);}
-}
-`;
-
-document.head.appendChild(style);
-
-</script>
+<script src="script.js"></script>
 
 </body>
 </html>
