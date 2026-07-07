@@ -1,0 +1,1596 @@
+/* ================================
+   GHOST CHAT HORROR STYLE
+   PART 1
+================================ */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Courier New", monospace;
+}
+
+body{
+
+    height:100vh;
+    overflow:hidden;
+    background:#000;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+}
+
+
+/* ================================
+   CRT SCREEN EFFECT
+================================ */
+
+.crt{
+
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:50;
+
+    background:
+    repeating-linear-gradient(
+        0deg,
+        rgba(255,255,255,0.03),
+        rgba(255,255,255,0.03) 2px,
+        transparent 2px,
+        transparent 4px
+    );
+
+    animation:crtMove 0.15s infinite;
+
+}
+
+
+@keyframes crtMove{
+
+    0%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(2px);
+    }
+
+    100%{
+        transform:translateY(0);
+    }
+
+}
+
+
+
+/* ================================
+   SMOKE ANIMATION
+================================ */
+
+
+.smoke{
+
+    position:absolute;
+    bottom:-200px;
+
+    width:300px;
+    height:300px;
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(255,255,255,.25),
+        transparent 70%
+    );
+
+    border-radius:50%;
+
+    filter:blur(35px);
+
+    opacity:.5;
+
+}
+
+
+.smoke1{
+
+    left:10%;
+    animation:smokeUp 15s infinite;
+
+}
+
+
+.smoke2{
+
+    left:35%;
+    animation:smokeUp 18s infinite 3s;
+
+}
+
+
+.smoke3{
+
+    left:60%;
+    animation:smokeUp 20s infinite 6s;
+
+}
+
+
+.smoke4{
+
+    left:85%;
+    animation:smokeUp 17s infinite 2s;
+
+}
+
+
+
+@keyframes smokeUp{
+
+
+0%{
+
+    transform:
+    translateY(0)
+    scale(.5);
+
+    opacity:0;
+
+}
+
+
+20%{
+
+    opacity:.5;
+
+}
+
+
+100%{
+
+    transform:
+    translateY(-1000px)
+    scale(2);
+
+    opacity:0;
+
+}
+
+}
+
+
+
+/* ================================
+   FIRE EFFECT
+================================ */
+
+
+.fire{
+
+    position:fixed;
+
+    bottom:-80px;
+
+    width:100%;
+    height:160px;
+
+    background:
+
+    radial-gradient(
+        ellipse,
+        #ff3300,
+        #990000,
+        transparent 70%
+    );
+
+
+    filter:blur(30px);
+
+    animation:fireMove .8s infinite alternate;
+
+}
+
+
+@keyframes fireMove{
+
+
+from{
+
+    transform:
+    scaleY(1);
+
+    opacity:.7;
+
+}
+
+
+to{
+
+    transform:
+    scaleY(1.4);
+
+    opacity:1;
+
+}
+
+}
+
+
+
+
+/* ================================
+   BLOOD DRIP
+================================ */
+
+
+.blood{
+
+    position:absolute;
+
+    top:-50px;
+
+    width:20px;
+
+    height:120px;
+
+    background:
+
+    linear-gradient(
+        red,
+        darkred
+    );
+
+
+    border-radius:0 0 20px 20px;
+
+    animation:
+    bloodDrop
+    8s
+    infinite;
+
+}
+
+
+.blood1{
+
+    left:20%;
+
+}
+
+
+.blood2{
+
+    left:50%;
+    height:170px;
+    animation-delay:3s;
+
+}
+
+
+.blood3{
+
+    left:80%;
+    animation-delay:5s;
+
+}
+
+
+
+@keyframes bloodDrop{
+
+
+0%{
+
+    transform:translateY(-100px);
+
+}
+
+
+50%{
+
+    transform:translateY(20px);
+
+}
+
+
+100%{
+
+    transform:translateY(-100px);
+
+}
+
+}
+
+
+
+/* ================================
+   MAIN CHAT BOX
+================================ */
+
+
+.container{
+
+
+position:relative;
+
+z-index:10;
+
+width:420px;
+
+background:
+
+rgba(10,10,10,.9);
+
+
+border:
+
+2px solid red;
+
+
+border-radius:20px;
+
+
+padding:25px;
+
+
+box-shadow:
+
+0 0 40px red;
+
+
+backdrop-filter:blur(10px);
+
+
+}
+
+
+
+#title{
+
+
+text-align:center;
+
+
+color:#ff2222;
+
+
+font-size:28px;
+
+
+margin-bottom:20px;
+
+
+text-shadow:
+
+0 0 10px red,
+0 0 20px crimson;
+
+
+animation:
+
+titleGlitch
+1s
+infinite;
+
+
+}
+
+
+
+@keyframes titleGlitch{
+
+
+0%{
+
+transform:translate(0);
+
+}
+
+
+25%{
+
+transform:translate(-2px,2px);
+
+}
+
+
+50%{
+
+transform:translate(2px,-2px);
+
+}
+
+
+75%{
+
+transform:translate(-1px,1px);
+
+}
+
+
+100%{
+
+transform:translate(0);
+
+}
+
+
+}
+
+
+
+
+/* ================================
+   CHAT WINDOW
+================================ */
+
+
+#chat{
+
+
+height:300px;
+
+
+overflow-y:auto;
+
+
+background:
+
+rgba(0,0,0,.8);
+
+
+border-radius:15px;
+
+
+padding:15px;
+
+
+border:1px solid #444;
+
+
+}
+
+
+
+
+.ghost{
+
+
+color:#ff5555;
+
+
+margin:15px 0;
+
+
+font-size:18px;
+
+
+animation:
+
+ghostAppear
+.5s;
+
+
+}
+
+
+
+.user{
+
+
+color:#00ff99;
+
+
+margin:15px 0;
+
+
+font-size:18px;
+
+
+}
+
+
+
+
+@keyframes ghostAppear{
+
+
+from{
+
+opacity:0;
+
+transform:
+
+translateX(-50px);
+
+}
+
+
+to{
+
+opacity:1;
+
+transform:
+
+translateX(0);
+
+}
+
+
+}
+
+
+
+
+/* ================================
+   TYPING MESSAGE
+================================ */
+
+
+.typing{
+
+
+height:30px;
+
+
+margin-top:15px;
+
+
+color:#aaa;
+
+
+font-style:italic;
+
+
+animation:
+
+blink 1s infinite;
+
+
+}
+
+
+
+@keyframes blink{
+
+
+50%{
+
+opacity:.3;
+
+}
+
+}
+
+
+
+/* ================================
+   INPUT AREA
+================================ */
+
+
+.inputBox{
+
+
+display:flex;
+
+
+gap:10px;
+
+
+margin-top:15px;
+
+
+}
+
+
+
+input{
+
+
+flex:1;
+
+
+padding:12px;
+
+
+background:#111;
+
+
+border:
+
+1px solid red;
+
+
+color:white;
+
+
+border-radius:10px;
+
+
+outline:none;
+
+
+font-size:16px;
+
+
+}
+
+
+
+button{
+
+
+padding:12px 20px;
+
+
+background:
+
+darkred;
+
+
+border:none;
+
+
+color:white;
+
+
+border-radius:10px;
+
+
+cursor:pointer;
+
+
+font-size:16px;
+
+
+box-shadow:
+
+0 0 15px red;
+
+
+}
+
+
+
+button:hover{
+
+
+background:red;
+
+
+transform:scale(1.1);
+
+
+}
+
+/* ================================
+   PART 2
+   EXTRA HORROR EFFECTS
+================================ */
+
+
+/* ================================
+   GHOST JUMP SCARE
+================================ */
+
+#ghostJump{
+
+    position:fixed;
+
+    inset:0;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:
+
+    rgba(0,0,0,.95);
+
+    z-index:999;
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transition:.2s;
+
+}
+
+
+
+#ghostJump img{
+
+    width:350px;
+
+    max-width:80%;
+
+    filter:
+
+    drop-shadow(0 0 40px white);
+
+    animation:
+
+    ghostZoom .4s;
+
+}
+
+
+
+@keyframes ghostZoom{
+
+
+0%{
+
+    transform:
+
+    scale(.1)
+    rotate(20deg);
+
+}
+
+
+50%{
+
+    transform:
+
+    scale(1.3)
+    rotate(-10deg);
+
+}
+
+
+100%{
+
+    transform:
+
+    scale(1);
+
+}
+
+}
+
+
+
+/* ================================
+   LIGHTNING EFFECT
+================================ */
+
+
+#lightning{
+
+    position:fixed;
+
+    inset:0;
+
+    background:white;
+
+    opacity:0;
+
+    pointer-events:none;
+
+    z-index:70;
+
+}
+
+
+
+.light{
+
+    animation:
+
+    lightningFlash .2s;
+
+}
+
+
+
+@keyframes lightningFlash{
+
+
+0%{
+
+opacity:0;
+
+}
+
+
+20%{
+
+opacity:1;
+
+}
+
+
+40%{
+
+opacity:0;
+
+}
+
+
+60%{
+
+opacity:.8;
+
+}
+
+
+100%{
+
+opacity:0;
+
+}
+
+}
+
+
+
+
+
+/* ================================
+   SCREEN FLICKER
+================================ */
+
+
+body.flicker{
+
+
+animation:
+
+screenFlicker
+.3s
+infinite;
+
+
+}
+
+
+
+@keyframes screenFlicker{
+
+
+0%{
+
+opacity:1;
+
+}
+
+
+20%{
+
+opacity:.4;
+
+}
+
+
+30%{
+
+opacity:1;
+
+}
+
+
+50%{
+
+opacity:.2;
+
+}
+
+
+70%{
+
+opacity:.8;
+
+}
+
+
+100%{
+
+opacity:1;
+
+}
+
+}
+
+
+
+
+
+/* ================================
+   SCREEN SHAKE
+================================ */
+
+
+body.shake{
+
+
+animation:
+
+shakeScreen
+.5s;
+
+
+}
+
+
+
+@keyframes shakeScreen{
+
+
+0%{
+
+transform:translate(0);
+
+}
+
+
+10%{
+
+transform:
+
+translate(-15px,5px);
+
+}
+
+
+20%{
+
+transform:
+
+translate(12px,-8px);
+
+}
+
+
+30%{
+
+transform:
+
+translate(-10px,10px);
+
+}
+
+
+40%{
+
+transform:
+
+translate(15px,-5px);
+
+}
+
+
+50%{
+
+transform:
+
+translate(-8px,8px);
+
+}
+
+
+60%{
+
+transform:
+
+translate(8px,-10px);
+
+}
+
+
+70%{
+
+transform:
+
+translate(-5px,5px);
+
+}
+
+
+100%{
+
+transform:translate(0);
+
+}
+
+}
+
+
+
+
+
+/* ================================
+   FLOATING HORROR EMOJIS
+================================ */
+
+
+.horrorEmoji{
+
+
+position:absolute;
+
+
+bottom:-50px;
+
+
+font-size:35px;
+
+
+opacity:.8;
+
+
+animation:
+
+emojiFloat
+10s
+linear
+infinite;
+
+
+z-index:2;
+
+
+}
+
+
+
+@keyframes emojiFloat{
+
+
+0%{
+
+
+transform:
+
+translateY(0)
+rotate(0);
+
+
+opacity:0;
+
+
+}
+
+
+20%{
+
+
+opacity:1;
+
+
+}
+
+
+100%{
+
+
+transform:
+
+translateY(-110vh)
+rotate(360deg);
+
+
+opacity:0;
+
+
+}
+
+}
+
+
+
+
+
+/* ================================
+   CURSED CHAT EFFECT
+================================ */
+
+
+.cursed{
+
+
+color:red;
+
+
+animation:
+
+curseGlitch
+.2s
+infinite;
+
+
+}
+
+
+
+@keyframes curseGlitch{
+
+
+0%{
+
+
+text-shadow:
+
+2px 0 red;
+
+
+}
+
+
+50%{
+
+
+text-shadow:
+
+-3px 0 cyan;
+
+
+}
+
+
+100%{
+
+
+text-shadow:
+
+2px 0 red;
+
+
+}
+
+
+}
+
+
+
+
+
+/* ================================
+   EYE WATCHING EFFECT
+================================ */
+
+
+.eye{
+
+
+position:absolute;
+
+
+width:40px;
+
+
+height:20px;
+
+
+background:
+
+white;
+
+
+border-radius:
+
+50%;
+
+
+box-shadow:
+
+0 0 20px red;
+
+
+animation:
+
+eyeBlink
+5s
+infinite;
+
+
+}
+
+
+
+.eye::after{
+
+
+content:"";
+
+
+position:absolute;
+
+
+width:12px;
+
+
+height:12px;
+
+
+background:black;
+
+
+border-radius:50%;
+
+
+left:14px;
+
+
+top:4px;
+
+
+}
+
+
+
+
+@keyframes eyeBlink{
+
+
+0%,90%,100%{
+
+
+transform:
+
+scaleY(1);
+
+
+}
+
+
+95%{
+
+
+transform:
+
+scaleY(.1);
+
+
+}
+
+}
+
+
+
+
+
+/* ================================
+   OLD TV STATIC
+================================ */
+
+
+.tvNoise{
+
+
+position:fixed;
+
+
+inset:0;
+
+
+background:
+
+url("noise.png");
+
+
+opacity:.08;
+
+
+pointer-events:none;
+
+
+animation:
+
+noiseMove
+.2s
+infinite;
+
+
+z-index:40;
+
+
+}
+
+
+
+@keyframes noiseMove{
+
+
+0%{
+
+
+background-position:0 0;
+
+
+}
+
+
+100%{
+
+
+background-position:100px 100px;
+
+
+}
+
+}
+
+
+
+
+
+/* ================================
+   CURSOR HORROR GLOW
+================================ */
+
+
+input:focus{
+
+
+box-shadow:
+
+0 0 20px red;
+
+
+border-color:
+
+white;
+
+
+}
+
+
+
+
+
+/* ================================
+   DANGER WARNING TEXT
+================================ */
+
+
+.warning{
+
+
+color:
+
+#ff0000;
+
+
+font-size:
+
+14px;
+
+
+text-align:center;
+
+
+margin-top:
+
+10px;
+
+
+animation:
+
+warningBlink
+1s
+infinite;
+
+
+}
+
+
+
+@keyframes warningBlink{
+
+
+50%{
+
+
+opacity:.2;
+
+
+}
+
+}
+
+
+
+
+
+/* ================================
+   MOBILE DESIGN
+================================ */
+
+
+@media(max-width:600px){
+
+
+.container{
+
+
+width:95%;
+
+
+padding:15px;
+
+
+}
+
+
+
+#title{
+
+
+font-size:22px;
+
+
+}
+
+
+
+#chat{
+
+
+height:250px;
+
+
+}
+
+
+
+input{
+
+
+font-size:14px;
+
+
+}
+
+
+
+button{
+
+
+padding:
+
+10px;
+
+
+}
+
+
+
+#ghostJump img{
+
+
+width:250px;
+
+
+}
+
+
+}
+
+
+
+
+/* ================================
+   EXTRA ATMOSPHERE
+================================ */
+
+
+.darkPulse{
+
+
+animation:
+
+darkPulse
+3s
+infinite;
+
+
+}
+
+
+
+@keyframes darkPulse{
+
+
+0%{
+
+
+filter:
+
+brightness(1);
+
+
+}
+
+
+50%{
+
+
+filter:
+
+brightness(.5);
+
+
+}
+
+
+100%{
+
+
+filter:
+
+brightness(1);
+
+
+}
+
+}
+
+
+
+
+.shadow{
+
+
+position:absolute;
+
+
+width:150px;
+
+
+height:300px;
+
+
+background:
+
+linear-gradient(
+
+transparent,
+
+black
+
+);
+
+
+opacity:.4;
+
+
+animation:
+
+shadowMove
+8s
+infinite;
+
+
+}
+
+
+
+@keyframes shadowMove{
+
+
+0%{
+
+
+left:-200px;
+
+
+}
+
+
+100%{
+
+
+left:110%;
+
+
+}
+
+}
